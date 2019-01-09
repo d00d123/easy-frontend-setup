@@ -57,14 +57,14 @@ function test(done) {
 
 function scripts() {
   return browserify({
-      entries: './src/scripts/index.js',
-      debug: true
-    })
+    entries: './src/scripts/index.js',
+    debug: true
+  })
     .transform("babelify", {
       presets: ["@babel/preset-env"]
     })
     .bundle()
-    .pipe(source('app.js'))
+    .pipe(source('index.js'))
     .pipe(buffer())
     .pipe(sourcemaps.init())
     .pipe(uglify())
@@ -74,13 +74,13 @@ function scripts() {
 
 function buildScripts() {
   return browserify({
-      entries: './src/scripts/index.js'
-    })
+    entries: './src/scripts/index.js'
+  })
     .transform("babelify", {
       presets: ["@babel/preset-env"]
     })
     .bundle()
-    .pipe(source('app.js'))
+    .pipe(source('index.js'))
     .pipe(buffer())
     .pipe(uglify())
     .pipe(gulp.dest(paths.scripts.dest))
@@ -92,8 +92,8 @@ function styles() {
     cssnano()
   ]
   return gulp.src(paths.styles.src, {
-      sourcemaps: true
-    })
+    sourcemaps: true
+  })
     .pipe(sourcemaps.init())
     .pipe(sass().on('error', sass.logError))
     .pipe(postcss(plugins))
@@ -124,8 +124,8 @@ function buildHtml() {
 
 function images() {
   return gulp.src(paths.images.src, {
-      sourcemaps: true
-    })
+    sourcemaps: true
+  })
     .pipe(gulp.dest(paths.images.dest));
 }
 
@@ -143,7 +143,7 @@ function reload(done) {
 function initServe(done) {
   connect.server({}, function () {
     server.init({
-      proxy: 'localhost/intro-to-bootstrap/dist'
+      server: 'dist'
     });
   })
   done();
